@@ -1,0 +1,115 @@
+class Chart extends StatefulWidget {
+  const Chart({super.key});
+
+  @override
+  State<Chart> createState() => _ChartState();
+}
+
+class _ChartState extends State<Chart> {
+  List<Color> gradientColors = [
+    Color.fromARGB(255, 25, 7, 218),
+    Color.fromARGB(255, 246, 246, 248),
+  ];
+
+  bool showAvg = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+      child: Stack(
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: 1.70,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(18),
+                ),
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 18,
+                  left: 12,
+                  top: 24,
+                  bottom: 12,
+                ),
+                child: LineChart(
+                  mainData(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  LineChartData mainData() {
+    return LineChartData(
+      gridData: FlGridData(
+        show: false,
+      ),
+      titlesData: FlTitlesData(
+        show: false,
+      ),
+      borderData: FlBorderData(
+        show: false,
+      ),
+      minX: 0,
+      maxX: 11,
+      minY: 0,
+      maxY: 6,
+      lineBarsData: [
+        LineChartBarData(
+          spots: const [
+            FlSpot(0, 3),
+            FlSpot(2.6, 2),
+            FlSpot(4.9, 5),
+            FlSpot(6.8, 3.1),
+            FlSpot(8, 4),
+            FlSpot(9.5, 3),
+            FlSpot(11, 4),
+          ],
+          isCurved: true,
+          color: Color.fromARGB(255, 51, 14, 186),
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: gradientColors
+                  .map((color) => color.withOpacity(0.3))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  LineChartData avgData() {
+    return LineChartData(
+      lineTouchData: LineTouchData(enabled: false),
+      minX: 0,
+      maxX: 7,
+      minY: 0,
+      maxY: 6,
+      lineBarsData: [
+        LineChartBarData(spots: const [
+          FlSpot(0, 3.44),
+          FlSpot(2.6, 3.44),
+          FlSpot(4.9, 3.44),
+          FlSpot(6.8, 3.44),
+          FlSpot(8, 3.44),
+          FlSpot(9.5, 3.44),
+          FlSpot(11, 3.44),
+        ]),
+      ],
+    );
+  }
+}
